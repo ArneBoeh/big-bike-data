@@ -1,10 +1,15 @@
 import fetch from 'node-fetch';
 import csvToJson from 'csvtojson';
+import mongodb from 'mongodb';
 
 const BIKE_DATA_QUERY = 'https://www.opengov-muenchen.de/api/3/action/package_search?q=raddauerzaehlstellen&rows=1000';
 
 const DATASET_TAGE_PATTERN  = /rad[0-9]{6}tage.*\.csv/;
 const DATASET_15MIN_PATTERN = /rad[0-9]{6}15min.*\.csv/;
+
+const dbclient = new mongodb.MongoClient(process.env.MUNICH_BIKES_DB_CONNECTION);
+await dbclient.connect();
+const db = dbclient.db();
 
 function loadCSV (url, table) {
     console.log ("Downloading", url);
