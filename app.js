@@ -5,5 +5,10 @@ const BIKE_DATA_QUERY = 'https://www.opengov-muenchen.de/api/3/action/package_se
 fetch (BIKE_DATA_QUERY)
     .then(response => response.json())
     .then(json => {
-        console.log(json)}
-    );
+        json.result.results.forEach(result => {
+            result.resources.forEach(resource => {
+                console.log(resource.url);
+            });
+        })
+    });
+    
