@@ -16,7 +16,11 @@ function loadCSV (url, table) {
     fetch(url)
         .then(response => response.text())
         .then(text => csvToJson().fromString(text))
-        .then(json => console.log(json));
+        .then(data => {
+            console.log ("Storing", url);
+            let collection = db.collection(table);
+            collection.insertMany(data);
+        });
 }
 
 function loadResource(url) {
