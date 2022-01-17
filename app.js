@@ -32,10 +32,47 @@ function loadCSV (url, table) {
         .then(response => response.text())
         .then(text => csvToJson({ colParser: DATASET_COLUMN_TYPES }).fromString(text))
         .then(data => {
+            data.forEach(row => {
+                // Combine separate date/time columns:
+                row.zeit = combineDateTimeStrings(row.datum, row.uhrzeit_start, url);
+                delete row.datum;
+                delete row.uhrzeit_start;
+                delete row.uhrzeit_ende;
+            });
             console.log ("Storing", url);
             let collection = db.collection(table);
             collection.insertMany(data);
         });
+}
+
+function combineDateTimeStrings(datestr, timestr, url) {
+    // Some dates are in dd.mm.yyyy, some in yyyy.dd.mm:
+    let datefix = '';
+    if (datestr.match(/^\d\d\.\d\d\.\d\d\d\d$/)) {
+        datefix = datestr.substring(6, 10) + '-' + datestr.substring(3, 5) + '-' + datestr.substring(0, 2);
+    } else if (datestr.match(/^\d\d\d\d\.\d\d\.\d\d$/)) {
+        datefix = datestr.replaceAll('.', '-');
+    } else {
+        throw 'Invalid date string input ' + datestr + ' in ' + url;
+    }
+
+    // Some times are in mm:dd, some in mm:dd:ss:
+    let timefix = '';
+    if (timestr.match(/^\d\d:\d\d$/)) {
+        timefix = timestr + ':00';
+    } else if (timestr.match(/^\d\d:\d\d:\d\d$/)) {
+        timefix = timestr;
+    } else {
+        throw 'Invalid time string input ' + timestr + ' in ' + url;
+    }
+
+    let datetimestr = datefix + 'T' + timefix;
+    let date = new Date(datetimestr)
+    // Make sure we really created a valid date:
+    if (isNaN(date.getTime())) {
+        throw 'Invalid date string ' + datetimestr + ' in ' + url;
+    }
+    return date;
 }
 
 function loadResource(url) {
