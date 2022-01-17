@@ -43,7 +43,7 @@ function loadResource(url) {
         loadCSV(url, 'tage');
     }
     if (url.match(DATASET_15MIN_PATTERN)) {
-        loadCSV(url, '15min');
+        loadCSV(url, 'viertelstunden');
     }
 }
 
