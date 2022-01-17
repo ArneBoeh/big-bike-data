@@ -1,0 +1,50 @@
+{
+    "title": "tage",
+    "required": [
+      "zeit",
+      "zaehlstelle",
+      "richtung_1",
+      "richtung_2",
+      "gesamt",
+      "min-temp",
+      "max-temp",
+      "niederschlag",
+      "bewoelkung",
+      "sonnenstunden"
+    ],
+    "properties": {
+      "_id": {
+        "bsonType": "objectId"
+      },
+      "zeit": {
+        "bsonType": "date"
+      },
+      "zaehlstelle": {
+        "bsonType": "string"
+      },
+      "richtung_1": {
+        "bsonType": "number"
+      },
+      "richtung_2": {
+        "bsonType": "number"
+      },
+      "gesamt": {
+        "bsonType": "number"
+      },
+      "min-temp": {
+        "bsonType": "number"
+      },
+      "max-temp": {
+        "bsonType": "number"
+      },
+      "niederschlag": {
+        "bsonType": "number"
+      },
+      "bewoelkung": {
+        "bsonType": "number"
+      },
+      "sonnenstunden": {
+        "bsonType": "number"
+      }
+    }
+  }

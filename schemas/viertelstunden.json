@@ -1,0 +1,30 @@
+{
+    "title": "viertelstunden",
+    "required": [
+      "zeit",
+      "zaehlstelle",
+      "richtung_1",
+      "richtung_2",
+      "gesamt"
+    ],
+    "properties": {
+      "_id": {
+        "bsonType": "objectId"
+      },
+      "zeit": {
+        "bsonType": "date"
+      },
+      "zaehlstelle": {
+        "bsonType": "string"
+      },
+      "richtung_1": {
+        "bsonType": "number"
+      },
+      "richtung_2": {
+        "bsonType": "number"
+      },
+      "gesamt": {
+        "bsonType": "number"
+      }
+    }
+  }
