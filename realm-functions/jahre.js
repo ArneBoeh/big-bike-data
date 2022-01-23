@@ -2,7 +2,7 @@
    
 exports = function() {
 
-    return context.services.get("mongodb-atlas").db("frequencies").collection("tage").aggregate([
+    return context.services.get("mongodb-atlas").db("MunichBikes").collection("tage").aggregate([
       {
         $group: {
           _id: { jahr: { $year: "$zeit" }, zaehlstelle: "$zaehlstelle" },
