@@ -4,7 +4,7 @@ exports = function(query) {
     var bis = new Date(query.bis);
     var zaehlstelle = query.zaehlstelle;
   
-    return context.services.get("mongodb-atlas").db("frequencies").collection("tage").aggregate([
+    return context.services.get("mongodb-atlas").db("MunichBikes").collection("tage").aggregate([
       {
         $match: { 
           zeit: { $gte: von, $lte: bis },
