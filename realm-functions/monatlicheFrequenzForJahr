@@ -1,0 +1,35 @@
+exports = function(query) {
+
+  var jahr = Number(query.jahr);
+  var von = new Date(jahr, 1, 1);
+  var bis = new Date(jahr + 1, 1, 1);
+
+  return context.services.get("mongodb-atlas").db("MunichBikes").collection("tage").aggregate([
+    {
+      $match: { 
+        zeit: { $gte: von, $lt: bis } 
+      }
+    },
+    {
+      $group: {
+        _id: { $month: "$zeit" },
+        frequenz: { $sum: "$gesamt" },
+        temperatur: { $avg: "$max-temp" }
+      }
+    },
+    {
+      $project: {  
+        _id: 0,
+        monat: "$_id",
+        frequenz: 1,
+        temperatur: 1
+      }
+    },
+    {
+      $sort: {  
+        monat: 1,
+      }
+    }
+  ]).toArray();
+
+};
