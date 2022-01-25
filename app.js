@@ -24,6 +24,9 @@ const DATASET_COLUMN_TYPES = {
 
 const dbclient = new mongodb.MongoClient(process.env.MUNICH_BIKES_DB_CONNECTION);
 await dbclient.connect();
+//
+//Live Demo: DB Namen eingeben!
+//
 const db = dbclient.db();
 
 function loadCSV (url, table) {
@@ -46,7 +49,7 @@ function loadCSV (url, table) {
 }
 
 function combineDateTimeStrings(datestr, timestr, url) {
-    // Some dates are in dd.mm.yyyy, some in yyyy.dd.mm:
+    // Some dates are in dd.mm.yyyy, some in yyyy.dd.mm
     let datefix = '';
     if (datestr.match(/^\d\d\.\d\d\.\d\d\d\d$/)) {
         datefix = datestr.substring(6, 10) + '-' + datestr.substring(3, 5) + '-' + datestr.substring(0, 2);
@@ -56,7 +59,7 @@ function combineDateTimeStrings(datestr, timestr, url) {
         throw 'Invalid date string input ' + datestr + ' in ' + url;
     }
 
-    // Some times are in mm:dd, some in mm:dd:ss:
+    // Some times are in hh:mm, some in hh:mm:ss
     let timefix = '';
     if (timestr.match(/^\d\d:\d\d$/)) {
         timefix = timestr + ':00';
